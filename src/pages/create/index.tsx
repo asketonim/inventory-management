@@ -1,22 +1,20 @@
-import { useEffect, useState } from "react";
-import { getProducts } from "../../api/products";
+import "./styles.css";
+
+import { useState } from "react";
+import ProductForm from "./product-form";
+import NewlyAddedProducts from "./newly-added";
 
 export default function Create() {
-  const [products, setProducts] = useState<Product[]>([]);
+  const [newProducts, setNewProducts] = useState<string[]>([]);
 
-  useEffect(() => {
-    getProducts().then((data) => {
-      setProducts(data);
-    });
-  }, []);
+  const handleAddNewProduct = (productName: string) => {
+    setNewProducts([...newProducts, productName]);
+  };
 
   return (
-    <main className="page">
-        <ul>
-          {products.map((product) => (
-            <li key={product.name}>{product.name}</li>
-          ))}
-        </ul>
+    <main className="page create-product">
+      <ProductForm addNewProduct={handleAddNewProduct} />
+      <NewlyAddedProducts productNames={newProducts} />
     </main>
   );
 }
