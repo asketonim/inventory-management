@@ -20,6 +20,16 @@ ul {
   padding: 0;
 }
 
+p {
+  margin: 0;
+}
+
+.wrap {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
 a {
   font-weight: 500;
   color: #646cff;

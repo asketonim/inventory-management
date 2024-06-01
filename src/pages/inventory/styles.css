@@ -1,0 +1,53 @@
+.page.inventory {
+  flex-direction: column;
+  gap: 16px;
+}
+
+.controls {
+  width: 420px;
+
+  display: flex;
+  justify-content: end;
+  gap: 12px;
+}
+
+.inventory-list {
+  box-sizing: border-box;
+  border: 1px solid #686D76;
+  border-radius: 8px;
+  padding: 16px;
+  width: 420px;
+  height: 60%;
+
+  display: flex;
+  flex-direction: column;
+}
+
+td {
+  text-align: center;
+}
+
+tr.new {
+  color: green;
+}
+
+tr.edited {
+  color: yellow;
+}
+
+td.item-name {
+  max-width: 180px;
+}
+
+.add-inventory-item {
+  width: 420px;
+  display: flex;
+
+  justify-content: space-between;
+  align-items: end;
+}
+
+.quantity {
+  width: 64px;
+}
+
