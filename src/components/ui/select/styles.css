@@ -1,0 +1,19 @@
+label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+select {
+  width: 120px;
+  padding: 6px;
+  border-radius: 4px;
+}
+
+option {
+  width: 120px;
+}
+
+select:focus {
+  outline: none;
+}
