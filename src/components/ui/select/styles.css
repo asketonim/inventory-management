@@ -5,6 +5,7 @@ label {
 }
 
 select {
+  border: none;
   width: 120px;
   padding: 6px;
   border-radius: 4px;

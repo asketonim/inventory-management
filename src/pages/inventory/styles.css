@@ -47,7 +47,7 @@ td.item-name {
   align-items: end;
 }
 
-.quantity {
+input.quantity {
   width: 64px;
 }
 
