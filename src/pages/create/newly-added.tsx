@@ -11,7 +11,7 @@ export default function NewlyAddedProducts({ productNames }: Props) {
       {productNames.length ? (
         <ul>
           {productNames.map((productName) => (
-            <li key={productName}>{productName}</li>
+            <li key={productName} className="wrap">{productName}</li>
           ))}
         </ul>
       ) : (

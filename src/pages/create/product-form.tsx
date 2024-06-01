@@ -4,6 +4,7 @@ import { useState } from "react";
 import { addProduct } from "../../api/products";
 import Button from "../../components/ui/button";
 import Input from "../../components/ui/input";
+import { Link } from "react-router-dom";
 
 interface Props {
   addNewProduct: (productName: string) => void;
@@ -32,23 +33,26 @@ export default function ProductForm({ addNewProduct }: Props) {
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className={`product-form ${error ? "error" : ""}`}
-    >
-      <Input
-        errorMessage={error}
-        label="Product Name"
-        type="text"
-        value={newProductName}
-        onChange={handlePoductNameChange}
-      />
-      <Button
-        label="Save"
-        type="submit"
-        disabled={!newProductName || !!error}
-        className="save-product"
-      />
-    </form>
+    <div>
+      <form
+        onSubmit={handleSubmit}
+        className={`product-form ${error ? "error" : ""}`}
+      >
+        <Input
+          errorMessage={error}
+          label="Product Name"
+          type="text"
+          value={newProductName}
+          onChange={handlePoductNameChange}
+        />
+        <Button
+          label="Save"
+          type="submit"
+          disabled={!newProductName || !!error}
+          className="save-product"
+        />
+        <Link to="/inventory">Go to Inventory</Link>
+      </form>
+    </div>
   );
 }

@@ -13,6 +13,10 @@
   outline: red;
 }
 
+.product-form a {
+  text-align: center;
+}
+
 .error-message {
   color: red;
 }
@@ -30,4 +34,8 @@
   align-items: center;
   width: 320px;
   height: 50%;
+}
+
+.products-container li {
+  max-width: 280px;
 }
