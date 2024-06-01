@@ -2,14 +2,13 @@ import * as React from "react";
 import * as ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./index.css";
-import Root from "./pages/root";
 import Create from "./pages/create";
 import Inventory from "./pages/inventory";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Root />,
+    element: <Inventory />,
   },
   {
     path: "/inventory",
