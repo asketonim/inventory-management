@@ -2,7 +2,7 @@ import "./styles.css";
 
 import { useState } from "react";
 import ProductForm from "./product-form";
-import NewlyAddedProducts from "./newly-added";
+import NewlyAddedProducts from "./newly-added-products";
 
 export default function Create() {
   const [newProducts, setNewProducts] = useState<string[]>([]);
