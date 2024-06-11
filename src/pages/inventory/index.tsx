@@ -20,9 +20,9 @@ export default function Inventory() {
   const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
-    getInventory().then((data) => {
-      setInventory(data.inventory);
-      setErrorMessage(data.error);
+    getInventory().then(({ data, error }) => {
+      setInventory(data);
+      setErrorMessage(error);
     });
   }, []);
 
@@ -44,10 +44,10 @@ export default function Inventory() {
   }, [inventory]);
 
   const handleResetInventory = useCallback(async () => {
-    const { error, data } = await resetInventory();
+    const { error } = await resetInventory();
 
     if (!error) {
-      setInventory(data);
+      setInventory([]);
     }
 
     setErrorMessage(error);
