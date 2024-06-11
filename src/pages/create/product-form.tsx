@@ -1,6 +1,6 @@
 import "./styles.css";
 
-import { useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { addProduct } from "../../api/products";
 import Button from "../../components/ui/button";
 import Input from "../../components/ui/input";
@@ -11,26 +11,26 @@ interface Props {
 }
 
 export default function ProductForm({ addNewProduct }: Props) {
-  const [newProductName, setNewProductName] = useState("");
+  const inputRef = useRef<HTMLInputElement>(null);
   const [error, setError] = useState("");
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = useCallback(
+    async (e: React.FormEvent) => {
+      e.preventDefault();
 
-    const { success, message } = await addProduct(newProductName);
+      const newProductName = inputRef?.current?.value || "";
 
-    if (success) {
-      addNewProduct(newProductName);
-      setNewProductName("");
-    } else {
+      const { success, message } = await addProduct(newProductName);
+
+      if (success) {
+        addNewProduct(newProductName);
+        inputRef.current!.value = "";
+      }
+
       setError(message);
-    }
-  };
-
-  const handlePoductNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setNewProductName(e.target.value);
-    setError("");
-  };
+    },
+    [addNewProduct]
+  );
 
   return (
     <div>
@@ -39,16 +39,16 @@ export default function ProductForm({ addNewProduct }: Props) {
         className={`product-form ${error ? "error" : ""}`}
       >
         <Input
+          onChange={() => setError("")}
+          innerRef={inputRef}
           errorMessage={error}
           label="Product Name"
           type="text"
-          value={newProductName}
-          onChange={handlePoductNameChange}
         />
         <Button
           label="Save"
           type="submit"
-          disabled={!newProductName || !!error}
+          disabled={!!error}
           className="save-product"
         />
         <Link to="/inventory">Go to Inventory</Link>
