@@ -22,7 +22,7 @@ export default function Inventory() {
   useEffect(() => {
     if (refetch) {
       getInventory().then((data) => {
-        setInventory(data.length ? data : []);
+        setInventory(data);
       });
 
       setRefetch(false);

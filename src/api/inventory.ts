@@ -1,11 +1,21 @@
 const BASE_URL = "http://34.238.153.187:8085";
 
 export async function getInventory() {
-  const res = await fetch(`${BASE_URL}/inventory`);
+  try {
+    const res = await fetch(`${BASE_URL}/inventory`);
 
-  const data: InventoryItem[] = await res.json();
+    if (!res.ok) {
+      throw new Error(`Error. Status: ${res.status}`);
+    }
 
-  return data;
+    const data: InventoryItem[] | Record<string, never> = await res.json();
+
+    return Array.isArray(data) ? data : [];
+  } catch (e) {
+    console.error("There was an error while fetching inventory: ", e);
+
+    return [];
+  }
 }
 
 export async function resetInventory() {
