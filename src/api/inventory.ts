@@ -5,16 +5,18 @@ export async function getInventory() {
     const res = await fetch(`${BASE_URL}/inventory`);
 
     if (!res.ok) {
-      throw new Error(`Error. Status: ${res.status}`);
+      throw new Error(`Status: ${res.status}`);
     }
 
     const data: InventoryItem[] | Record<string, never> = await res.json();
 
-    return Array.isArray(data) ? data : [];
-  } catch (e) {
-    console.error("There was an error while fetching inventory: ", e);
+    return { error: "", inventory: Array.isArray(data) ? data : [] };
+  } catch (error) {
+    const errorMessage = `There was an error while fetching inventory: ${error}`;
 
-    return [];
+    console.error(errorMessage);
+
+    return { error: errorMessage, inventory: [] };
   }
 }
 
@@ -23,9 +25,13 @@ export async function resetInventory() {
     method: "POST",
   });
 
-  if (res.ok) return { success: true };
+  if (res.ok) {
+    const { error, inventory } = await getInventory();
 
-  return { success: false };
+    return { error, data: inventory };
+  }
+
+  return { error: "Couldn't reset inventory", data: [] };
 }
 
 export async function saveInventory({
@@ -42,10 +48,12 @@ export async function saveInventory({
   });
 
   if (res.ok) {
-    return { success: true, message: "" };
+    const { error, inventory } = await getInventory();
+
+    return { error, data: inventory };
   }
 
-  const { error } = await res.json();
+  const { error }: { error: string } = await res.json();
 
-  return { success: false, message: error };
+  return { error, data: [] };
 }

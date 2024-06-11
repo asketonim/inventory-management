@@ -1,6 +1,6 @@
 import "./styles.css";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
   getInventory,
   resetInventory,
@@ -17,41 +17,47 @@ export type InventoryItemWithStatus = InventoryItem & {
 
 export default function Inventory() {
   const [inventory, setInventory] = useState<InventoryItemWithStatus[]>([]);
-  const [refetch, setRefetch] = useState(true);
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
-    if (refetch) {
-      getInventory().then((data) => {
-        setInventory(data);
-      });
+    getInventory().then((data) => {
+      setInventory(data.inventory);
+      setErrorMessage(data.error);
+    });
+  }, []);
 
-      setRefetch(false);
-    }
-  }, [refetch]);
-
-  const handleSaveInventory = async () => {
+  const handleSaveInventory = useCallback(async () => {
     const newInventory = inventory.map(({ name, quantity }) => ({
       name,
       quantity,
     }));
 
-    await saveInventory({
+    const { data, error } = await saveInventory({
       inventory: newInventory,
-    }).then(() => {
-      setRefetch(true);
     });
-  };
 
-  const handleResetInventory = async () => {
-    await resetInventory().then(() => {
-      setRefetch(true);
-    });
-  };
+    if (!error) {
+      setInventory(data);
+    }
+
+    setErrorMessage(error);
+  }, [inventory]);
+
+  const handleResetInventory = useCallback(async () => {
+    const { error, data } = await resetInventory();
+
+    if (!error) {
+      setInventory(data);
+    }
+
+    setErrorMessage(error);
+  }, []);
 
   return (
     <main className="page inventory">
       <InventoryItemForm inventory={inventory} setInventory={setInventory} />
       <Link to="/create">+ Create Product</Link>
+      {errorMessage && <p>{errorMessage}</p>}
       <InventoryTable inventory={inventory} setInventory={setInventory} />
       <div className="controls">
         <Button label="Reset" onClick={handleResetInventory} />
