@@ -18,9 +18,12 @@ export default function InventoryItemForm({ inventory, setInventory }: Props) {
   const [selectedProduct, setSelectedProduct] = useState("--");
   const [quantity, setQuantity] = useState(1);
 
+  const [errorMessage, setErrorMessage] = useState("");
+
   useEffect(() => {
-    getProducts().then((data) => {
+    getProducts().then(({ error, data }) => {
       setProducts(data);
+      setErrorMessage(error);
     });
   }, []);
 
@@ -48,26 +51,29 @@ export default function InventoryItemForm({ inventory, setInventory }: Props) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="add-inventory-item">
-      <Select
-        label="Product"
-        value={selectedProduct}
-        onChange={(e) => setSelectedProduct(e.target.value)}
-        options={products}
-      />
-      <Input
-        className="quantity"
-        min={1}
-        type="number"
-        label="Quantity"
-        value={Number(quantity).toString()}
-        onChange={(e) => setQuantity(Number(e.target.value))}
-      />
-      <Button
-        label="Add Product"
-        type="submit"
-        disabled={selectedProduct === "--"}
-      />
-    </form>
+    <>
+      <form onSubmit={handleSubmit} className="add-inventory-item">
+        <Select
+          label="Product"
+          value={selectedProduct}
+          onChange={(e) => setSelectedProduct(e.target.value)}
+          options={products}
+        />
+        <Input
+          className="quantity"
+          min={1}
+          type="number"
+          label="Quantity"
+          value={Number(quantity).toString()}
+          onChange={(e) => setQuantity(Number(e.target.value))}
+        />
+        <Button
+          label="Add Product"
+          type="submit"
+          disabled={selectedProduct === "--"}
+        />
+      </form>
+      {errorMessage && <p>{errorMessage}</p>}
+    </>
   );
 }

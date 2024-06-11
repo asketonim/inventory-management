@@ -1,33 +1,17 @@
-const BASE_URL = "http://34.238.153.187:8085";
+import request from "./request";
 
 export async function getProducts() {
-  const res = await fetch(`${BASE_URL}/product/all`);
+  const res: { error: string; data: Product[] } = await request("/product/all");
 
-  const data: Product[] = await res.json();
-
-  return data;
+  return res;
 }
 
-export async function addProduct(
-  productName: string
-): Promise<{ success: boolean; message: string }> {
-  console.log(productName);
+export async function addProduct(name: string) {
+  const res: { error: string; data: Product[] } = await request(
+    "/product",
+    "PUT",
+    { name }
+  );
 
-  const res = await fetch(`${BASE_URL}/product`, {
-    method: "PUT",
-    headers: new Headers({
-      "Content-Type": "application/json",
-    }),
-    body: JSON.stringify({
-      name: productName,
-    }),
-  });
-
-  if (res.ok) {
-    return { success: true, message: "" };
-  }
-
-  const { error } = await res.json();
-
-  return { success: false, message: error };
+  return res;
 }

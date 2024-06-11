@@ -20,14 +20,14 @@ export default function ProductForm({ addNewProduct }: Props) {
 
       const newProductName = inputRef?.current?.value || "";
 
-      const { success, message } = await addProduct(newProductName);
+      const { error } = await addProduct(newProductName);
 
-      if (success) {
+      if (!error) {
         addNewProduct(newProductName);
         inputRef.current!.value = "";
       }
 
-      setError(message);
+      setError(error);
     },
     [addNewProduct]
   );
