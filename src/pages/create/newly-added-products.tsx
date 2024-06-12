@@ -1,4 +1,4 @@
-import "./styles.css"
+import styles from "./styles.module.css";
 
 interface Props {
   productNames: string[];
@@ -6,12 +6,14 @@ interface Props {
 
 export default function NewlyAddedProducts({ productNames }: Props) {
   return (
-    <div className="products-container">
+    <div className={styles["products-container"]}>
       <h3>New Products</h3>
       {productNames.length ? (
         <ul>
           {productNames.map((productName) => (
-            <li key={productName} className="wrap">{productName}</li>
+            <li key={productName} className={styles["wrap"]}>
+              {productName}
+            </li>
           ))}
         </ul>
       ) : (

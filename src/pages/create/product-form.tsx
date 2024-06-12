@@ -1,4 +1,4 @@
-import "./styles.css";
+import styles from "./styles.module.css";
 
 import { useCallback, useRef, useState } from "react";
 import { addProduct } from "../../api/products";
@@ -36,7 +36,7 @@ export default function ProductForm({ addNewProduct }: Props) {
     <div>
       <form
         onSubmit={handleSubmit}
-        className={`product-form ${error ? "error" : ""}`}
+        className={`${styles["product-form"]} ${error ? styles.error : ""}`}
       >
         <Input
           onChange={() => setError("")}
@@ -49,7 +49,7 @@ export default function ProductForm({ addNewProduct }: Props) {
           label="Save"
           type="submit"
           disabled={!!error}
-          className="save-product"
+          className={styles["save-product"]}
         />
         <Link to="/inventory">Go to Inventory</Link>
       </form>

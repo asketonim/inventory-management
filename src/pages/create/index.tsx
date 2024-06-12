@@ -1,4 +1,4 @@
-import "./styles.css";
+import styles from "./styles.module.css";
 
 import { useState } from "react";
 import ProductForm from "./product-form";
@@ -12,7 +12,7 @@ export default function Create() {
   };
 
   return (
-    <main className="page create-product">
+    <main className={`page ${styles["create-product"]}`}>
       <ProductForm addNewProduct={handleAddNewProduct} />
       <NewlyAddedProducts productNames={newProducts} />
     </main>

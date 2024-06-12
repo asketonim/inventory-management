@@ -8,7 +8,7 @@ interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
   innerRef?: RefObject<HTMLInputElement>
 }
 
-export default function Input({ label, errorMessage, className, innerRef, ...rest }: Props) {
+export default function Input({ label, errorMessage, className = "", innerRef, ...rest }: Props) {
   return (
     <>
       <label>
