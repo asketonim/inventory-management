@@ -1,4 +1,4 @@
-import "./styles.css";
+import styles from "./styles.module.css";
 
 import { useEffect, useState } from "react";
 import { getProducts } from "../../api/products";
@@ -52,7 +52,7 @@ export default function InventoryItemForm({ inventory, setInventory }: Props) {
 
   return (
     <>
-      <form onSubmit={handleSubmit} className="add-inventory-item">
+      <form onSubmit={handleSubmit} className={styles["add-inventory-item"]}>
         <Select
           label="Product"
           value={selectedProduct}
@@ -60,7 +60,7 @@ export default function InventoryItemForm({ inventory, setInventory }: Props) {
           options={products}
         />
         <Input
-          className="quantity"
+          className={styles.quantity}
           min={1}
           type="number"
           label="Quantity"

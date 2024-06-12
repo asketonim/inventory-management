@@ -1,9 +1,14 @@
-import "./styles.css";
+import styles from "./styles.module.css";
 
 interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   label: string;
+  className?: string;
 }
 
-export default function Button({ label, ...rest }: Props) {
-  return <button {...rest}>{label}</button>;
+export default function Button({ label, className = "", ...rest }: Props) {
+  return (
+    <button className={`${styles.button} ${className}`} {...rest}>
+      {label}
+    </button>
+  );
 }

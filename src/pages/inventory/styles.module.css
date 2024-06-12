@@ -1,4 +1,4 @@
-.page.inventory {
+.inventory {
   flex-direction: column;
   gap: 16px;
 }
@@ -27,15 +27,15 @@ td {
   text-align: center;
 }
 
-tr.new {
+.new {
   color: green;
 }
 
-tr.edited {
+.edited {
   color: yellow;
 }
 
-td.item-name {
+.item {
   max-width: 180px;
 }
 
@@ -47,7 +47,7 @@ td.item-name {
   align-items: end;
 }
 
-input.quantity {
+.quantity {
   width: 64px;
 }
 

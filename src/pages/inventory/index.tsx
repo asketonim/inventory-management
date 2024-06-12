@@ -1,4 +1,4 @@
-import "./styles.css";
+import styles from "./styles.module.css";
 
 import { useCallback, useEffect, useState } from "react";
 import {
@@ -54,12 +54,12 @@ export default function Inventory() {
   }, []);
 
   return (
-    <main className="page inventory">
+    <main className={`page ${styles.inventory}`}>
       <InventoryItemForm inventory={inventory} setInventory={setInventory} />
       <Link to="/create">+ Create Product</Link>
       {errorMessage && <p>{errorMessage}</p>}
       <InventoryTable inventory={inventory} setInventory={setInventory} />
-      <div className="controls">
+      <div className={styles.controls}>
         <Button label="Reset" onClick={handleResetInventory} />
         <Button label="Save" onClick={handleSaveInventory} />
       </div>

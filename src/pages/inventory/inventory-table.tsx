@@ -1,3 +1,5 @@
+import styles from "./styles.module.css";
+
 import { type InventoryItemWithStatus } from ".";
 import Button from "../../components/ui/button";
 
@@ -12,7 +14,7 @@ export default function InventoryTable({ inventory, setInventory }: Props) {
   };
 
   return (
-    <div className="inventory-list">
+    <div className={styles["inventory-list"]}>
       <table>
         <thead>
           <tr>
@@ -23,8 +25,15 @@ export default function InventoryTable({ inventory, setInventory }: Props) {
         </thead>
         <tbody>
           {inventory.map((inventoryItem) => (
-            <tr key={inventoryItem.name} className={inventoryItem.status || ""}>
-              <td className="wrap item-name">{inventoryItem.name}</td>
+            <tr
+              key={inventoryItem.name}
+              className={
+                inventoryItem.status ? styles[inventoryItem.status] : ""
+              }
+            >
+              <td className={`wrap ${styles["item-name"]}`}>
+                {inventoryItem.name}
+              </td>
               <td>{inventoryItem.quantity}</td>
               <td>
                 <Button
