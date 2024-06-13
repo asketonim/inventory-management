@@ -5,11 +5,11 @@ import { getProducts } from "../../api/products";
 import Input from "../../components/ui/input";
 import Button from "../../components/ui/button";
 import Select from "../../components/ui/select";
-import { InventoryItemWithStatus } from ".";
+import { type InventoryItemsMap } from "../../utils/inventory";
 
 interface Props {
-  inventory: InventoryItemWithStatus[];
-  setInventory: (inventory: InventoryItemWithStatus[]) => void;
+  inventory: InventoryItemsMap;
+  setInventory: (inventory: InventoryItemsMap) => void;
 }
 
 export default function InventoryItemForm({ inventory, setInventory }: Props) {
@@ -37,16 +37,20 @@ export default function InventoryItemForm({ inventory, setInventory }: Props) {
   };
 
   const handleAddInventoryItem = (name: string, quantity: number) => {
-    const alreadyPresentInd = inventory.findIndex((item) => item.name === name);
+    const updatedInventoryMap = new Map(inventory);
+    const currentItem = updatedInventoryMap.get(name);
 
-    if (alreadyPresentInd !== -1) {
-      const updatedInventory = [...inventory];
-      updatedInventory[alreadyPresentInd].quantity += quantity;
-      updatedInventory[alreadyPresentInd].status = "edited";
+    if (currentItem) {
+      updatedInventoryMap.set(name, {
+        quantity: currentItem.quantity + quantity,
+        status: "edited",
+      });
 
-      setInventory(updatedInventory);
+      setInventory(updatedInventoryMap);
     } else {
-      setInventory([...inventory, { name, quantity, status: "new" }]);
+      updatedInventoryMap.set(name, { quantity, status: "new" });
+
+      setInventory(updatedInventoryMap);
     }
   };
 

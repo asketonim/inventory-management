@@ -1,16 +1,19 @@
 import styles from "./styles.module.css";
 
-import { type InventoryItemWithStatus } from ".";
 import Button from "../../components/ui/button";
+import { type InventoryItemsMap } from "../../utils/inventory";
 
 interface Props {
-  inventory: InventoryItemWithStatus[];
-  setInventory: (inventory: InventoryItemWithStatus[]) => void;
+  inventory: InventoryItemsMap;
+  setInventory: (inventory: InventoryItemsMap) => void;
 }
 
 export default function InventoryTable({ inventory, setInventory }: Props) {
   const handleDeleteInventoryItem = (name: string) => {
-    setInventory(inventory.filter((item) => item.name !== name));
+    const updatedInventoryMap = new Map(inventory);
+
+    updatedInventoryMap.delete(name);
+    setInventory(updatedInventoryMap);
   };
 
   return (
@@ -24,21 +27,14 @@ export default function InventoryTable({ inventory, setInventory }: Props) {
           </tr>
         </thead>
         <tbody>
-          {inventory.map((inventoryItem) => (
-            <tr
-              key={inventoryItem.name}
-              className={
-                inventoryItem.status ? styles[inventoryItem.status] : ""
-              }
-            >
-              <td className={`wrap ${styles["item-name"]}`}>
-                {inventoryItem.name}
-              </td>
-              <td>{inventoryItem.quantity}</td>
+          {Array.from(inventory).map(([name, item]) => (
+            <tr key={name} className={item.status ? styles[item.status] : ""}>
+              <td className={`wrap ${styles["item-name"]}`}>{name}</td>
+              <td>{item.quantity}</td>
               <td>
                 <Button
                   label="❌"
-                  onClick={() => handleDeleteInventoryItem(inventoryItem.name)}
+                  onClick={() => handleDeleteInventoryItem(name)}
                 />
               </td>
             </tr>
